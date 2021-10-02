@@ -6,6 +6,8 @@ export const expressHandler = (controller: any) => {
     try {
       await controller(req, res, next);
     } catch (error: any) {
+      console.log(error);
+
       return HttpResponseHandler.sendInternalError(res, error);
     }
   };
