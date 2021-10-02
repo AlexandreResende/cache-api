@@ -18,7 +18,7 @@ export class GetCacheDataController {
     events.on(CACHE.CACHE_RETRIEVED_EVENT, cacheDataRetrieved);
     events.on(CACHE.CACHE_NOT_FOUND_EVENT, cacheDataNotFound);
 
-    const command = Container.resolve("getCacheDataCommand", events);
+    const command = await Container.resolve("getCacheDataCommand", events);
 
     await command.execute({ key: req.params.key });
   }

@@ -6,6 +6,7 @@ import faker from "faker";
 import { getCacheDataCommandFactory } from "../../factories/cache/GetCacheDataCommandFactory";
 import { eventNames } from "process";
 import { CACHE } from "../../../../src/Events";
+import { CacheData } from "../../../../src/repositories/ICacheRepository";
 
 const expect = chai.expect;
 
@@ -24,11 +25,12 @@ describe("GetCacheDataCommand", function() {
     it("emits a cacheRetrievedEvent when key is persisted on cache", async function() {
       // given
       const key = faker.lorem.word();
+      const data = faker.lorem.word();
       const events = new EventEmitter();
-      const getCache = sinon.stub().returns({ message: `key gotten: ${key}"` });
-      const expectedResult = { message: `key gotten: ${key}"` };
+      const getCache = sinon.stub().resolves({ key, data });
+      const expectedResult = { key, data };
 
-      const cacheRetrieved = (event: { message: string }) => {
+      const cacheRetrieved = (event: { key: string, data: CacheData }) => {
         // then
         expect(event).to.be.deep.equal(expectedResult);
         expect(getCache.calledOnceWith(key)).to.be.true;
@@ -38,6 +40,31 @@ describe("GetCacheDataCommand", function() {
 
       // when
       const command = getCacheDataCommandFactory(events, { get:  getCache });
+      await command.execute({ key });
+    });
+
+    it("emits a cacheNotFoundEvent when key does not exist on cache", async function() {
+      // given
+      const key = faker.lorem.word();
+      const events = new EventEmitter();
+      const expectedResult = { key };
+
+      const getCache = sinon.stub().resolves(null);
+      const setCache = sinon.stub().resolves(null);
+
+      const cacheNotFound = (event: { key: string, data: CacheData }) => {
+        // then
+        expect(typeof event).to.be.equal('object');
+        expect(event).to.have.property('key');
+        expect(event.key).to.be.equal(key);
+        expect(getCache.calledOnceWith(key)).to.be.true;
+        expect(setCache.calledOnce).to.be.true;
+      }
+
+      events.on(CACHE.CACHE_NOT_FOUND_EVENT, cacheNotFound);
+
+      // when
+      const command = getCacheDataCommandFactory(events, { get:  getCache, set: setCache });
       await command.execute({ key });
     });
   });

@@ -1,14 +1,11 @@
 import { EventEmitter } from "events";
+import faker from "faker";
 
 import { CACHE } from '../Events';
 import { IBaseCommand } from "./IBaseCommand";
+import { ICache } from "../repositories/ICacheRepository";
 
 type getCacheData = { key: string };
-
-interface ICache {
-  get(key: string): object;
-  set(): void;
-}
 
 export default class GetCacheDataCommand implements IBaseCommand {
   constructor(
@@ -17,7 +14,15 @@ export default class GetCacheDataCommand implements IBaseCommand {
   ) {}
 
   async execute(payload: getCacheData): Promise<void | boolean> {
-    const cachedData = this.cache.get(payload.key);
+    const cachedData = await this.cache.get(payload.key);
+
+    if (!cachedData) {
+      const data = faker.lorem.word();
+
+      await this.cache.set(payload.key, data);
+
+      return this.events.emit(CACHE.CACHE_NOT_FOUND_EVENT, { key: payload.key, data });
+    }
 
     this.events.emit(CACHE.CACHE_RETRIEVED_EVENT, cachedData);
   }
