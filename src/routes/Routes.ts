@@ -30,6 +30,7 @@ export class Routes {
       preflightContinue: false,
     };
 
+    // needs improvement since the more the api grows the bigger this will be
     this.routes
       .use(cors(options))
       .get("/cache/:key", expressHandler(new GetCacheDataController().handleRequest))
