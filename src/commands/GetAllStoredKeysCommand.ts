@@ -15,7 +15,7 @@ export default class GetAllStoredKeysCommand implements IBaseCommand {
     private readonly cache: IFindAllKeysCacheRepository,
   ) {}
 
-  async execute(payload: getCacheData): Promise<void | boolean> {
+  async execute(): Promise<void | boolean> {
     logger.info("Getting all stored keys");
     const keys = await this.cache.getAllKeys();
 
