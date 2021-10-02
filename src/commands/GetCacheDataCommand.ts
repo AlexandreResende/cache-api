@@ -1,6 +1,7 @@
 import { EventEmitter } from "events";
 import faker from "faker";
 
+import { logger } from "../Logger";
 import { CACHE } from '../Events';
 import { IBaseCommand } from "./IBaseCommand";
 import { ICache } from "../repositories/ICacheRepository";
@@ -17,6 +18,7 @@ export default class GetCacheDataCommand implements IBaseCommand {
     const cachedData = await this.cache.get(payload.key);
 
     if (!cachedData) {
+      logger.info("Cache miss");
       const data = faker.lorem.word();
 
       await this.cache.set(payload.key, data);
@@ -24,6 +26,7 @@ export default class GetCacheDataCommand implements IBaseCommand {
       return this.events.emit(CACHE.CACHE_NOT_FOUND_EVENT, { key: payload.key, data });
     }
 
+    logger.info("Cache hit");
     this.events.emit(CACHE.CACHE_RETRIEVED_EVENT, cachedData);
   }
 }

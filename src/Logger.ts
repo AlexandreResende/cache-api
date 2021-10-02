@@ -1,0 +1,14 @@
+import winston from "winston";
+
+export const logger = ((): winston.Logger => {
+  const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: [
+      new winston.transports.Console(),
+    ],
+  });
+
+  return logger;
+})();
