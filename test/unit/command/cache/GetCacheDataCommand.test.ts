@@ -4,7 +4,6 @@ import chai from "chai";
 import faker from "faker";
 
 import { getCacheDataCommandFactory } from "../../factories/cache/GetCacheDataCommandFactory";
-import { eventNames } from "process";
 import { CACHE } from "../../../../src/Events";
 import { CacheData } from "../../../../src/repositories/ICacheRepository";
 
