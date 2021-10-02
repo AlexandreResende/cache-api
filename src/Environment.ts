@@ -1,3 +1,12 @@
+import { POINT_CONVERSION_COMPRESSED } from "constants";
+
 export const API = {
   PORT: process.env.PORT || 3000,
 }
+
+export const DATABASE = {
+  DATABASE_NAME: process.env.MONGO_INITDB_DATABASE,
+  DATABASE_COLLECTION_NAME: process.env.MONGO_COLLECTION_NAME,
+  DATABASE_USER: process.env.MONGO_INITDB_ROOT_USERNAME,
+  DATABASE_PASSWORD: process.env.MONGO_INITDB_ROOT_PASSWORD,
+};
