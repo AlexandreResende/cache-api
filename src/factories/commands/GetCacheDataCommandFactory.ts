@@ -6,7 +6,7 @@ import GetCacheDataCommand from "../../commands/GetCacheDataCommand";
 export class GetCacheDataCommandFactory implements ICommandFactory  {
   create(events: EventEmitter) {
     const cache = {
-      get: () => { return { message: 'got cache message' } },
+      get: (key: string) => { return { message: `key gotten: ${key}`} },
       set: () => { return undefined; },
     };
 
