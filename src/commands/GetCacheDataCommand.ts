@@ -17,16 +17,17 @@ export default class GetCacheDataCommand implements IBaseCommand {
   async execute(payload: getCacheData): Promise<void | boolean> {
     const cachedData = await this.cache.get(payload.key);
 
-    if (!cachedData) {
-      logger.info("Cache miss");
-      const data = faker.lorem.word();
+    if (cachedData) {
+      logger.info("Cache hit");
 
-      await this.cache.set(payload.key, data);
-
-      return this.events.emit(CACHE.CACHE_NOT_FOUND_EVENT, { key: payload.key, data });
+      return this.events.emit(CACHE.CACHE_RETRIEVED_EVENT, { key: cachedData.key, data: cachedData.data });
     }
 
-    logger.info("Cache hit");
-    this.events.emit(CACHE.CACHE_RETRIEVED_EVENT, cachedData);
+    logger.info("Cache miss");
+    const data = faker.lorem.word();
+
+    await this.cache.set(payload.key, data);
+
+    return this.events.emit(CACHE.CACHE_NOT_FOUND_EVENT, { key: payload.key, data });
   }
 }
