@@ -1,3 +1,3 @@
 export interface IBaseCommand {
-  execute(payload: object): Promise<void | boolean>;
+  execute(payload?: object): Promise<void | boolean>;
 }
