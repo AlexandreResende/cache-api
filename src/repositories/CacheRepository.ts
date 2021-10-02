@@ -1,9 +1,9 @@
 import { Collection, Db, Document } from "mongodb";
 
 import { DATABASE } from "../Environment";
-import { CacheData, GetCache, ICache } from "./ICacheRepository";
+import { CacheData, GetCache, ICache, ICacheRepository } from "./ICacheRepository";
 
-export default class CacheRepository implements ICache {
+export default class CacheRepository implements ICacheRepository {
   private collection: Collection;
 
   constructor(
@@ -20,5 +20,12 @@ export default class CacheRepository implements ICache {
 
   async set(key: string, data: CacheData): Promise<void> {
     await this.collection.insertOne({ key, data });
+  }
+
+  async getAllKeys(): Promise<Document> {
+    const cursor = await this.collection.find({}, { projection: { _id: false, data: false } });
+    const allValues = await cursor.toArray();
+
+    return allValues.map((data: Document) => { return data.key; });;
   }
 }

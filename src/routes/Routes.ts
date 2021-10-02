@@ -4,6 +4,7 @@ import { Router } from "express";
 import { API } from '../Environment';
 import { expressHandler } from "../controllers/ExpressHandler";
 import { GetCacheDataController } from "../controllers/cache/GetCacheDataController";
+import { GetAllStoredKeysController } from '../controllers/cache/GetAllStoredKeysController';
 
 export class Routes {
   public routes: Router;
@@ -32,6 +33,7 @@ export class Routes {
     this.routes
       .use(cors(options))
       .get("/cache/:key", expressHandler(new GetCacheDataController().handleRequest))
+      .get("/cache", expressHandler(new GetAllStoredKeysController().handleRequest))
 
     // this.routes.options("*", cors(options));
   }
