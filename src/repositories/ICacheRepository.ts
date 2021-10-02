@@ -1,6 +1,6 @@
 import { Document } from "mongodb";
 
-export type CacheData = string | number | object;
+export type CacheData = string;
 
 export type GetCache = { _id: string; key: string, data: CacheData };
 
