@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  cache-api:
+    build: .
+    restart: always
+    command: npm start
+    env_file:
+      - .env
+    volumes:
+      - './:/poupa-up'
+    ports:
+      - "3000:3000"
+
+networks:
+  cache-api:
+    driver: bridge
