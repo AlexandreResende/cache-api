@@ -2,7 +2,7 @@ require('module-alias/register');
 import express, { Application } from "express";
 
 import { API } from "./Environment";
-import { Routes } from "../src/controllers/index";
+import { Routes } from "./routes/Routes";
 
 export default class App {
   public readonly app: express.Application;
