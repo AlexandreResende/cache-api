@@ -9,7 +9,7 @@ export default class Container {
     ["getCacheDataCommand"]: new GetCacheDataCommandFactory(),
   };
 
-  public static resolve(commandName: string, events: EventEmitter): IBaseCommand {
+  public static async resolve(commandName: string, events: EventEmitter): Promise<IBaseCommand> {
     return this.commandFactories[commandName].create(events);
   };
 }
