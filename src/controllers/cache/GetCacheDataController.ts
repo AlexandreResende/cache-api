@@ -11,7 +11,7 @@ export class GetCacheDataController {
       return HttpResponseHandler.sendSuccess(res, data);
     };
     const cacheDataNotFound = (data: object) => {
-      return HttpResponseHandler.sendSuccess(res, data);
+      return HttpResponseHandler.sendCreated(res, data);
     }
 
     const events = new EventEmitter();

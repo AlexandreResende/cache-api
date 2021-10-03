@@ -22,7 +22,7 @@ export class CreateCacheEntryController {
     }
 
     const cacheEntryCreated = (data: object) => {
-      return HttpResponseHandler.sendSuccess(res, data);
+      return HttpResponseHandler.sendCreated(res, data);
     };
 
     const events = new EventEmitter();
