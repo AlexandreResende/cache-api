@@ -19,8 +19,10 @@ services:
   database:
     image: mongo
     container_name: 'database'
-    env_file:
-      - .env
+    environment:
+      - MONGO_COLLECTION_NAME=dummy
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
     volumes:
       - ./mongo-volume:/data/db
     ports:
