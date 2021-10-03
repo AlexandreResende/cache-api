@@ -41,5 +41,28 @@ describe("GetCacheDataCommand", function() {
       const command = createCacheEntryFactory(events, { set: setCache });
       await command.execute({ key, data });
     });
+
+    it("emits a cacheEntryAlreadyExists when key passed already exists", async function() {
+      // given
+      const key = faker.lorem.word();
+      const data = faker.lorem.word();
+      const events = new EventEmitter();
+      const getCache = sinon.stub().resolves({ key, data });
+      const setCache = sinon.stub().resolves();
+      const expectedResult = { key };
+
+      const cacheKeyExists = (event: { key: string }) => {
+        // then
+        expect(event).to.be.deep.equal(expectedResult);
+        expect(getCache.calledOnceWith(key)).to.be.true;
+        expect(setCache.notCalled).to.be.true;
+      }
+
+      events.on(CACHE.CACHE_KEY_ALREADY_EXISTS, cacheKeyExists);
+
+      // when
+      const command = createCacheEntryFactory(events, { get: getCache, set: setCache });
+      await command.execute({ key, data });
+    });
   });
 });

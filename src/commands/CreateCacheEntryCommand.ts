@@ -1,5 +1,4 @@
 import { EventEmitter } from "events";
-import faker from "faker";
 
 import { logger } from "../Logger";
 import { CACHE } from '../Events';
@@ -16,8 +15,14 @@ export default class CreateCacheEntryCommand implements IBaseCommand {
 
   async execute(payload: getCacheData): Promise<void | boolean> {
     logger.info("Create cache entry");
+    const entry = await this.cache.get(payload.key);
+
+    if (entry) {
+      return this.events.emit(CACHE.CACHE_KEY_ALREADY_EXISTS, { key: payload.key });
+    }
+
     const result = await this.cache.set(payload.key, payload.data);
 
-    return this.events.emit(CACHE.CREATE_CACHE_ENTRY, result);
+    this.events.emit(CACHE.CREATE_CACHE_ENTRY, result);
   }
 }

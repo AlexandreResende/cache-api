@@ -3,4 +3,5 @@ export const CACHE = {
   CACHE_NOT_FOUND_EVENT: 'cacheNotFoundEvent',
   GET_ALL_STORED_KEYS_EVENT: 'getAllSStoredKeysEvent',
   CREATE_CACHE_ENTRY: 'createCacheEntry',
+  CACHE_KEY_ALREADY_EXISTS: 'cacheEntryAlreadyExists',
 };
