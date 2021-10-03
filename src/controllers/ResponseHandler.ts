@@ -13,6 +13,10 @@ export class HttpResponseHandler {
     response.status(StatusCodes.OK).send(data);
   }
 
+  public static sendCreated(response: Response, data?: {}): void {
+    response.status(StatusCodes.CREATED).send(data);
+  }
+
   public static sendForbidden(response: Response, data: object): void {
     response.status(StatusCodes.FORBIDDEN).send(data);
   }
