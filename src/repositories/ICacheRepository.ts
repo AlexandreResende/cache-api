@@ -14,3 +14,7 @@ export interface ICache {
 export interface IFindAllKeysCacheRepository {
   getAllKeys(): Promise<Document>;
 }
+
+export interface IDeleteEntryCacheRepository {
+  deleteKey(key: string): Promise<void>;
+}

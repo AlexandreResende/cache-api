@@ -24,4 +24,10 @@ export default class CacheRepository implements ICacheRepository {
 
     return allValues.map((data: Document) => { return data.key; });;
   }
+
+  async deleteKey(key: string): Promise<void> {
+    const result = await this.collection.deleteOne({ key });
+
+    console.log(result);
+  }
 }

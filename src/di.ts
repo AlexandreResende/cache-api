@@ -5,12 +5,14 @@ import { ICommandFactory } from "./factories/ICommandFactory";
 import { GetCacheDataCommandFactory } from "./factories/commands/GetCacheDataCommandFactory";
 import { GetAllStoredKeysCommandFactory } from "./factories/commands/GetAllStoredKeysCommandFactory";
 import { CreateCacheEntryCommandFactory } from "./factories/commands/CreateCacheEntryCommandFactory";
+import { DeleteCacheEntryCommandFactory } from "./factories/commands/DeleteCacheEntryCommandFactory";
 
 export default class Container {
   private static readonly commandFactories:  Record<string, ICommandFactory> = {
     ["getCacheDataCommand"]: new GetCacheDataCommandFactory(),
     ["getAllStoredKeysCommand"]: new GetAllStoredKeysCommandFactory(),
     ["createCacheEntryCommand"]: new CreateCacheEntryCommandFactory(),
+    ["deleteCacheEntryCommand"]: new DeleteCacheEntryCommandFactory(),
   };
 
   public static async resolve(commandName: string, events: EventEmitter): Promise<IBaseCommand> {

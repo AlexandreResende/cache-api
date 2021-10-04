@@ -17,6 +17,10 @@ export class HttpResponseHandler {
     response.status(StatusCodes.CREATED).send(data);
   }
 
+  public static sendNoContent(response: Response, data?: {}): void {
+    response.status(StatusCodes.NO_CONTENT).send(data);
+  }
+
   public static sendForbidden(response: Response, data: object): void {
     response.status(StatusCodes.FORBIDDEN).send(data);
   }

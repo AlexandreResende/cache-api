@@ -6,6 +6,7 @@ import { expressHandler } from "../controllers/ExpressHandler";
 import { GetCacheDataController } from "../controllers/cache/GetCacheDataController";
 import { GetAllStoredKeysController } from '../controllers/cache/GetAllStoredKeysController';
 import { CreateCacheEntryController } from '../controllers/cache/CreateCacheEntryController';
+import { DeleteCacheEntryController } from '../controllers/cache/DeleteCacheEntryController';
 
 export class Routes {
   public routes: Router;
@@ -36,8 +37,8 @@ export class Routes {
       .use(cors(options))
       .get("/cache/:key", expressHandler(new GetCacheDataController().handleRequest))
       .get("/cache", expressHandler(new GetAllStoredKeysController().handleRequest))
-      .post("/cache", expressHandler(new CreateCacheEntryController().handleRequest)
-      );
+      .post("/cache", expressHandler(new CreateCacheEntryController().handleRequest))
+      .delete("/cache/:key", expressHandler(new DeleteCacheEntryController().handleRequest));
 
     // this.routes.options("*", cors(options));
   }
