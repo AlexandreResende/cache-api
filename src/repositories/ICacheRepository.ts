@@ -8,7 +8,8 @@ export interface ICacheRepository extends
   ICache,
   IFindAllKeysCacheRepository,
   IDeleteEntryCacheRepository,
-  IDeleteAllCacheRepository {}
+  IDeleteAllCacheRepository,
+  IUpdateCacheEntryRepository {}
 
 export interface ICache {
   get(key: string): Promise<Document | null>;
@@ -25,4 +26,8 @@ export interface IDeleteEntryCacheRepository {
 
 export interface IDeleteAllCacheRepository {
   deleteAll(): Promise<void>;
+}
+
+export interface IUpdateCacheEntryRepository {
+  update(key: string, data: string): Promise<void>;
 }

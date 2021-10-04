@@ -6,4 +6,5 @@ export const CACHE = {
   CACHE_KEY_ALREADY_EXISTS: 'cacheEntryAlreadyExists',
   CACHE_ENTRY_DELETED: 'cacheEntryDeleted',
   ALL_CACHE_ENTRIES_DELETED: 'allCacheEntriesDeleted',
+  CACHE_ENTRY_UPDATED: 'cacheEntryUpdated',
 };

@@ -1,6 +1,5 @@
 import { Collection, Db, Document } from "mongodb";
 
-import { DATABASE, API } from "../Environment";
 import { CacheData, ICacheRepository } from "./ICacheRepository";
 
 export default class CacheRepository implements ICacheRepository {
@@ -31,5 +30,9 @@ export default class CacheRepository implements ICacheRepository {
 
   async deleteAll(): Promise<void> {
     await this.collection.deleteMany({});
+  }
+
+  async update(key: string, data: string): Promise<void> {
+    await this.collection.updateOne({ key }, { $set: { data, updatedAt: new Date() } });
   }
 }
