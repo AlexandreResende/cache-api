@@ -4,15 +4,32 @@ import chai from "chai";
 import faker from "faker";
 
 import { getAllStoredKeysCommandFactory } from "../../factories/cache/GetAllStoredKeysCommandFactory";
-import { eventNames } from "process";
 import { CACHE } from "../../../../src/Events";
 import { CacheData } from "../../../../src/repositories/ICacheRepository";
+import GetAllStoredKeysCommand from "../../../../src/commands/GetAllStoredKeysCommand";
 
 const expect = chai.expect;
 
-describe("GetAllStoredKeysCommandF", function() {
+describe("GetAllStoredKeysCommand", function() {
   describe("sanity tests", function() {
     it("implements IBaseCommand correctly", function() {
+      it("exists", function() {
+        const events = new EventEmitter();
+
+        const command = getAllStoredKeysCommandFactory(events, {});
+
+        expect(command).to.not.be.null;
+        expect(command).to.not.be.undefined;
+      });
+
+      it("is an instance of GetCacheDataCommand", function() {
+        const events = new EventEmitter();
+
+        const command = getAllStoredKeysCommandFactory(events, {});
+
+        expect(command).to.be.instanceof(GetAllStoredKeysCommand);
+      });
+
       const events = new EventEmitter();
 
       const command = getAllStoredKeysCommandFactory(events, {});

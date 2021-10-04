@@ -6,18 +6,36 @@ import faker from "faker";
 import { getCacheDataCommandFactory } from "../../factories/cache/GetCacheDataCommandFactory";
 import { CACHE } from "../../../../src/Events";
 import { CacheData } from "../../../../src/repositories/ICacheRepository";
+import GetCacheDataCommand from "../../../../src/commands/GetCacheDataCommand";
 
 const expect = chai.expect;
 
 describe("GetCacheDataCommand", function() {
   describe("sanity tests", function() {
+    it("exists", function() {
+      const events = new EventEmitter();
+
+      const command = getCacheDataCommandFactory(events, {});
+
+      expect(command).to.not.be.null;
+      expect(command).to.not.be.undefined;
+    });
+
+    it("is an instance of GetCacheDataCommand", function() {
+      const events = new EventEmitter();
+
+      const command = getCacheDataCommandFactory(events, {});
+
+      expect(command).to.be.instanceof(GetCacheDataCommand);
+    });
+
     it("implements IBaseCommand correctly", function() {
       const events = new EventEmitter();
 
       const command = getCacheDataCommandFactory(events, {});
 
       expect(typeof command.execute).to.be.equal('function');
-    })
+    });
   });
 
   describe("unit tests", function() {
