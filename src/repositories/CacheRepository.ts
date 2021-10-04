@@ -26,8 +26,10 @@ export default class CacheRepository implements ICacheRepository {
   }
 
   async deleteKey(key: string): Promise<void> {
-    const result = await this.collection.deleteOne({ key });
+    await this.collection.deleteOne({ key });
+  }
 
-    console.log(result);
+  async deleteAll(): Promise<void> {
+    await this.collection.deleteMany({});
   }
 }
