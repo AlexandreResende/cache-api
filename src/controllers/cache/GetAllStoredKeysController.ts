@@ -6,7 +6,7 @@ import Container from "../../di";
 import { HttpResponseHandler } from "../ResponseHandler";
 
 export class GetAllStoredKeysController {
-  async handleRequest(req: Request, res: Response): Promise<void> {
+  async handleRequest(_: Request, res: Response): Promise<void> {
     const keysRetrieved = (data: object) => {
       return HttpResponseHandler.sendSuccess(res, data);
     };

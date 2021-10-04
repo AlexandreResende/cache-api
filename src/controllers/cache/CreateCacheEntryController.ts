@@ -1,6 +1,5 @@
 import { EventEmitter } from "events";
 import { Request, Response } from "express";
-import joi from "joi";
 
 import { CACHE } from "../../Events";
 import Container from "../../di";

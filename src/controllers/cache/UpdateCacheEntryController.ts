@@ -1,11 +1,9 @@
 import { EventEmitter } from "events";
 import { Request, Response } from "express";
-import joi from "joi";
 
 import { CACHE } from "../../Events";
 import Container from "../../di";
 import { HttpResponseHandler } from "../ResponseHandler";
-import Joi from "joi";
 
 export class UpdateCacheEntryController {
   async handleRequest(req: Request, res: Response): Promise<void> {

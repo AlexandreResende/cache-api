@@ -1,7 +1,5 @@
 import { EventEmitter } from "events";
-import faker from "faker";
 
-import { logger } from "../Logger";
 import { CACHE } from '../Events';
 import { IBaseCommand } from "./IBaseCommand";
 import { IDeleteAllCacheRepository } from "../repositories/ICacheRepository";
