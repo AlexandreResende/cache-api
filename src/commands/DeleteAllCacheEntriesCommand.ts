@@ -15,6 +15,6 @@ export default class DeleteAllCacheEntriesCommand implements IBaseCommand {
   async execute(): Promise<void | boolean> {
     await this.cache.deleteAll();
 
-    return this.events.emit(CACHE.ALL_CACHE_DATA_DELETED, {});
+    return this.events.emit(CACHE.ALL_CACHE_ENTRIES_DELETED, {});
   }
 }

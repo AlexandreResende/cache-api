@@ -5,5 +5,5 @@ export const CACHE = {
   CREATE_CACHE_ENTRY: 'createCacheEntry',
   CACHE_KEY_ALREADY_EXISTS: 'cacheEntryAlreadyExists',
   CACHE_ENTRY_DELETED: 'cacheEntryDeleted',
-  ALL_CACHE_DATA_DELETED: 'allCacheDataDeleted',
+  ALL_CACHE_ENTRIES_DELETED: 'allCacheEntriesDeleted',
 };

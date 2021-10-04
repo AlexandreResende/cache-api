@@ -14,7 +14,7 @@ export class DeleteAllCacheEntriesController {
     };
 
     const events = new EventEmitter();
-    events.on(CACHE.ALL_CACHE_DATA_DELETED, allCacheEntryDeleted);
+    events.on(CACHE.ALL_CACHE_ENTRIES_DELETED, allCacheEntryDeleted);
 
     const command = await Container.resolve("deleteAllCacheEntriesCommand", events);
 
