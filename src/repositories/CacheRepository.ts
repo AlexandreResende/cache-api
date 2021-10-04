@@ -15,7 +15,7 @@ export default class CacheRepository implements ICacheRepository {
   }
 
   async set(key: string, data: CacheData): Promise<void> {
-    await this.collection.insertOne({ key, data });
+    await this.collection.insertOne({ key, data, createdAt: new Date(), updatedAt: new Date() });
   }
 
   async getAllKeys(): Promise<Document> {
