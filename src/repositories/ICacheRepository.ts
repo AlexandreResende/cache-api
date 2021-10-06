@@ -10,7 +10,8 @@ export interface ICacheRepository extends
   IDeleteEntryCacheRepository,
   IDeleteAllCacheRepository,
   IUpdateCacheEntryRepository,
-  ICheckCacheLoad {}
+  ICheckCacheLoadRepository,
+  IGetOldestEntryRepository {}
 
 export interface ICache {
   get(key: string): Promise<Document | null>;
@@ -33,6 +34,10 @@ export interface IUpdateCacheEntryRepository {
   update(key: string, data: string): Promise<void>;
 }
 
-export interface ICheckCacheLoad {
+export interface ICheckCacheLoadRepository {
   isCacheFull(): Promise<boolean>;
+}
+
+export interface IGetOldestEntryRepository {
+  getOldestEntry(): Promise<Document>;
 }

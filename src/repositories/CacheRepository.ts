@@ -42,4 +42,10 @@ export default class CacheRepository implements ICacheRepository {
 
     return amountOfEntries >= API.MAXIMUM_CACHE_ENTRIES;
   }
+
+  async getOldestEntry(): Promise<Document> {
+    const entry = await this.collection.find({}).sort({ "timestamp": -1 }).limit(1);
+
+    return entry;
+  }
 }
