@@ -13,7 +13,7 @@ docker-compose up
 
 1- On first iteration we will create an index on mongodb with the `expireAfterSeconds` key to a spepcific value
 
-2- On second strategy we will use a key which name will be `recordedAt` and its value will be a timestamp
+2- On second iteration the strategy we will use a key which name will be `recordedAt` and its value will be a timestamp
   - We will use this field to check the record and build the TTL logic around it
   - When we reach the maximum amount of records, we will substitute the record with the oldest `recordedAt` value
 
