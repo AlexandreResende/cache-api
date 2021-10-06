@@ -12,7 +12,6 @@ export const collections = async (): Promise<Record<string, Collection>> => {
 
   const database = mongoDbClient.db(dbName);
   const dummyCollection = database.collection(DATABASE.DATABASE_DUMMY_COLLECTION_NAME as string);
-  await dummyCollection.createIndex({ updatedAt: 1 }, { expireAfterSeconds: API.RECORD_TIME_TO_LIVE as number });
 
   return {
     [DATABASE.DATABASE_DUMMY_COLLECTION_NAME as string]: dummyCollection,
