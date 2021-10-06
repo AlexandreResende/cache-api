@@ -1,6 +1,7 @@
 import { Collection, Db, Document } from "mongodb";
 
 import { CacheData, ICacheRepository } from "./ICacheRepository";
+import { API } from '../Environment';
 
 export default class CacheRepository implements ICacheRepository {
   constructor(
@@ -34,5 +35,11 @@ export default class CacheRepository implements ICacheRepository {
 
   async update(key: string, data: string): Promise<void> {
     await this.collection.updateOne({ key }, { $set: { data, timestamp: Date.now() } });
+  }
+
+  async isCacheFull(): Promise<boolean> {
+    const amountOfEntries = await this.collection.find({}).count();
+
+    return amountOfEntries >= API.MAXIMUM_CACHE_ENTRIES;
   }
 }
