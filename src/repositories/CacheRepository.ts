@@ -14,7 +14,7 @@ export default class CacheRepository implements ICacheRepository {
   }
 
   async set(key: string, data: CacheData): Promise<void> {
-    await this.collection.insertOne({ key, data, createdAt: new Date(), updatedAt: new Date() });
+    await this.collection.insertOne({ key, data, timestamp: Date.now() });
   }
 
   async getAllKeys(): Promise<Document> {
@@ -33,6 +33,6 @@ export default class CacheRepository implements ICacheRepository {
   }
 
   async update(key: string, data: string): Promise<void> {
-    await this.collection.updateOne({ key }, { $set: { data, updatedAt: new Date() } });
+    await this.collection.updateOne({ key }, { $set: { data, timestamp: Date.now() } });
   }
 }
