@@ -33,6 +33,10 @@ export class HttpResponseHandler {
     response.status(StatusCodes.NOT_FOUND).send(data);
   }
 
+  public static sendConflict(response: Response, data: object): void {
+    response.status(StatusCodes.CONFLICT).send(data);
+  }
+
   public static sendInternalError(response: Response, error: Error): void {
     response.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       message: "An internal error occurred",

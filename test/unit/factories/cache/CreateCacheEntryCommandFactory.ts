@@ -10,9 +10,13 @@ export function createCacheEntryFactory(
 ) {
   const get = sinon.stub();
   const set = sinon.stub();
+  const isCacheFull = sinon.stub();
+  const getOldestEntry = sinon.stub();
+  const update = sinon.stub();
+  const updateWithId = sinon.stub();
 
   return new CreateCacheEntryCommand(
     events,
-    { set, get, ...cache }
+    { set, get, isCacheFull, getOldestEntry, updateWithId, update, ...cache }
   );
 }

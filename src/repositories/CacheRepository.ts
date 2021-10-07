@@ -1,4 +1,4 @@
-import { Collection, Db, Document } from "mongodb";
+import { Collection, Document, ObjectId } from "mongodb";
 
 import { CacheData, ICacheRepository } from "./ICacheRepository";
 import { API } from '../Environment';
@@ -33,6 +33,13 @@ export default class CacheRepository implements ICacheRepository {
     await this.collection.deleteMany({});
   }
 
+  async updateWithId(id: string, updatedData: { key: string, data: string}): Promise<void> {
+    await this.collection.updateOne({
+      _id: new ObjectId(id.toString()) },
+      { $set: { ...updatedData, timestamp: Date.now() },
+    });
+  }
+
   async update(key: string, data: string): Promise<void> {
     await this.collection.updateOne({ key }, { $set: { data, timestamp: Date.now() } });
   }
@@ -44,8 +51,9 @@ export default class CacheRepository implements ICacheRepository {
   }
 
   async getOldestEntry(): Promise<Document> {
-    const entry = await this.collection.find({}).sort({ "timestamp": -1 }).limit(1);
+    const cursor = await this.collection.find({}).sort({ "timestamp": 1 }).limit(1);
+    const entry = await cursor.toArray();
 
-    return entry;
+    return entry[0];
   }
 }

@@ -7,4 +7,5 @@ export const CACHE = {
   CACHE_ENTRY_DELETED: 'cacheEntryDeleted',
   ALL_CACHE_ENTRIES_DELETED: 'allCacheEntriesDeleted',
   CACHE_ENTRY_UPDATED: 'cacheEntryUpdated',
+  UPDATED_OLDEST_ENTRY: 'updatedOldestEntry',
 };

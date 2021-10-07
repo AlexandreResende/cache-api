@@ -23,9 +23,17 @@ export class CreateCacheEntryController {
     const cacheEntryCreated = (data: object) => {
       return HttpResponseHandler.sendCreated(res, data);
     };
+    const cacheOperationSuccess = (data: object) => {
+      return HttpResponseHandler.sendSuccess(res, data);
+    };
+    const cacheKeyAlreadyExists = (data: object) => {
+      return HttpResponseHandler.sendConflict(res, data);
+    };
 
     const events = new EventEmitter();
     events.on(CACHE.CREATE_CACHE_ENTRY, cacheEntryCreated);
+    events.on(CACHE.CACHE_KEY_ALREADY_EXISTS, cacheKeyAlreadyExists);
+    events.on(CACHE.UPDATED_OLDEST_ENTRY, cacheOperationSuccess);
 
     const command = await Container.resolve("createCacheEntryCommand", events);
 

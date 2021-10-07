@@ -31,6 +31,7 @@ export interface IDeleteAllCacheRepository {
 }
 
 export interface IUpdateCacheEntryRepository {
+  updateWithId(id: string, updatedData: { key: string, data: string}): Promise<void>
   update(key: string, data: string): Promise<void>;
 }
 
