@@ -10,7 +10,7 @@ import {
   ICheckCacheLoadRepository,
   IUpdateCacheEntryRepository
 } from "../repositories/ICacheRepository";
-import { API } from "../Environment";
+import { UpdateOldestEntryCommand } from "./UpdateOldestEntryCommand";
 
 type getCacheData = { key: string, data: CacheData };
 
@@ -21,6 +21,7 @@ export default class CreateCacheEntryCommand implements IBaseCommand {
       ICheckCacheLoadRepository &
       IGetOldestEntryRepository &
       IUpdateCacheEntryRepository,
+    private readonly updateOldestEntryCommand: UpdateOldestEntryCommand,
   ) {}
 
   async execute(payload: getCacheData): Promise<void | boolean> {
@@ -33,13 +34,8 @@ export default class CreateCacheEntryCommand implements IBaseCommand {
 
     const isCacheFull = await this.cache.isCacheFull();
 
-    // extract this logic to a different command because it will be repeated when inserting a record
     if (isCacheFull) {
-      const oldestEntry = await this.cache.getOldestEntry();
-
-      await this.cache.updateWithId(oldestEntry._id, payload);
-
-      return this.events.emit(CACHE.UPDATED_OLDEST_ENTRY, { key: payload.key, data: payload.data });
+      return this.updateOldestEntryCommand.execute(payload);
     }
 
     const result = await this.cache.set(payload.key, payload.data);
