@@ -1,13 +1,11 @@
 FROM node:16
 
-WORKDIR /poupa-up
+WORKDIR /app
 
-COPY package*.json ./
+COPY package.json .
 
 RUN npm install
 
 COPY . .
-
-EXPOSE 7777
 
 CMD ["npm", "start"]
