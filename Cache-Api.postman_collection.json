@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "022f984e-73bd-4b4a-9f3f-a3384cce249d",
+		"name": "Cache-Api",
+		"description": "This is the collection of endpoints for the cache-api developed in typescript using mongodb as its database",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/cache",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"key\": \"banana28\",\n  \"data\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/cache",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache"
+					]
+				},
+				"description": "Create cache entry"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/cache/banana6",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cache",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache"
+					]
+				},
+				"description": "Get cache entry"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/cache",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/cache",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache"
+					]
+				},
+				"description": "Delete all cache entries"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/cache",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"key\": \"banana6\",\n  \"data\": \"byebye\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/cache",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache"
+					]
+				},
+				"description": "Update a cache entry"
+			},
+			"response": []
+		}
+	]
+}
