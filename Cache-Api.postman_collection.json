@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "localhost:3000/cache",
+			"name": "Create cache entry",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -35,7 +35,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:3000/cache/banana6",
+			"name": "Get cache entry",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -54,7 +54,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:3000/cache",
+			"name": "Delete all cache entries",
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -73,7 +73,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:3000/cache",
+			"name": "Update cache entry",
 			"request": {
 				"method": "PUT",
 				"header": [],
