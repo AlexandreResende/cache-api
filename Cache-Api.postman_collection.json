@@ -35,7 +35,7 @@
 			"response": []
 		},
 		{
-			"name": "Get all cache entries",
+			"name": "Get all cache entries keys",
 			"request": {
 				"method": "GET",
 				"header": [],
