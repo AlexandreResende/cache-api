@@ -2,14 +2,15 @@ import { Collection, Document, ObjectId } from "mongodb";
 
 import { CacheData, ICacheRepository } from "./ICacheRepository";
 import { API } from '../Environment';
+import { CacheEntryEntity } from "../entities/CacheEntry";
 
 export default class CacheRepository implements ICacheRepository {
   constructor(
     private readonly collection: Collection = collection,
   ) { }
 
-  async get(key: string): Promise<Document | null> {
-    const record = await this.collection.findOne({ key: { $eq: key } });
+  async get(key: string): Promise<CacheEntryEntity | null> {
+    const record = await this.collection.findOne<CacheEntryEntity>({ key: { $eq: key } });
 
     return record;
   }
@@ -18,11 +19,11 @@ export default class CacheRepository implements ICacheRepository {
     await this.collection.insertOne({ key, data, timestamp: Date.now() });
   }
 
-  async getAllKeys(): Promise<Document> {
-    const cursor = await this.collection.find({}, { projection: { _id: false, data: false } });
+  async getAllKeys(): Promise<string[]> {
+    const cursor = await this.collection.find<CacheEntryEntity>({}, { projection: { _id: false, data: false } });
     const allValues = await cursor.toArray();
 
-    return allValues.map((data: Document) => { return data.key; });;
+    return allValues.map((data: CacheEntryEntity) => { return data.key; });
   }
 
   async deleteKey(key: string): Promise<void> {
@@ -50,8 +51,8 @@ export default class CacheRepository implements ICacheRepository {
     return amountOfEntries >= API.MAXIMUM_CACHE_ENTRIES;
   }
 
-  async getOldestEntry(): Promise<Document> {
-    const cursor = await this.collection.find({}).sort({ "timestamp": 1 }).limit(1);
+  async getOldestEntry(): Promise<CacheEntryEntity> {
+    const cursor = await this.collection.find<CacheEntryEntity>({}).sort({ "timestamp": 1 }).limit(1);
     const entry = await cursor.toArray();
 
     return entry[0];
