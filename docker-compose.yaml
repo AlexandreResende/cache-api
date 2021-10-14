@@ -5,6 +5,7 @@ services:
     build: .
     restart: always
     command: npm start
+    container_name: 'cache-api'
     env_file:
       - .env
     volumes:
