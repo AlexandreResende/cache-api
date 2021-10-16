@@ -27,3 +27,10 @@ approach of what is overwritten in the comments of the source code)
 not be used. A new random value will then be generated (just like cache miss). The TTL
 will be reset on every read/cache hit
 ```
+
+# Improvements to be done
+
+- add more logs and meaningful ones
+- add pm2 to project
+- use a di lib
+- create a DAO class for the cache entries to abstract the usage of generics on repository
