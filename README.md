@@ -34,3 +34,5 @@ will be reset on every read/cache hit
 - add pm2 to project
 - use a di lib
 - create a DAO class for the cache entries to abstract the usage of generics on repository
+- add a monitoring tool
+- design a possible architecture for the project thinking about reliability, scalability and maintainability (system design)
