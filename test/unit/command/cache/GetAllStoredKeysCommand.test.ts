@@ -22,7 +22,7 @@ describe("GetAllStoredKeysCommand", function() {
         expect(command).to.not.be.undefined;
       });
 
-      it("is an instance of GetCacheDataCommand", function() {
+      it("is an instance of GetAllStoredKeysCommand", function() {
         const events = new EventEmitter();
 
         const command = getAllStoredKeysCommandFactory(events, {});
