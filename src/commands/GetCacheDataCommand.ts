@@ -18,12 +18,12 @@ export default class GetCacheDataCommand implements IBaseCommand {
     const cachedData = await this.cache.get(payload.key);
 
     if (cachedData) {
-      logger.info("Cache hit");
+      logger.info("Cache entry retrieved");
 
       return this.events.emit(CACHE.CACHE_RETRIEVED_EVENT, { key: cachedData.key, data: cachedData.data });
     }
 
-    logger.info("Cache miss");
+    logger.info("Cache key does not exist, creating an entry for this key");
     const data = faker.lorem.word();
 
     await this.cache.set(payload.key, data);

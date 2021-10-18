@@ -25,7 +25,7 @@ export default class CreateCacheEntryCommand implements IBaseCommand {
   ) {}
 
   async execute(payload: getCacheData): Promise<void | boolean> {
-    logger.info("Create cache entry");
+    logger.info("Creating cache entry");
     const entry = await this.cache.get(payload.key);
 
     if (entry) {
@@ -35,6 +35,8 @@ export default class CreateCacheEntryCommand implements IBaseCommand {
     const isCacheFull = await this.cache.isCacheFull();
 
     if (isCacheFull) {
+      logger.info("Cache is full, updating oldest value");
+
       return this.updateOldestEntryCommand.execute(payload);
     }
 
