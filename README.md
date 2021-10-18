@@ -30,10 +30,18 @@ will be reset on every read/cache hit
 
 # Improvements to be done
 
-- add more logs and meaningful ones
-- add pm2 to project
-- use a di lib
-- create a DAO class for the cache entries to abstract the usage of generics on repository
-- add a monitoring tool
-- design a possible architecture for the project thinking about reliability, scalability and maintainability (system design)
-- use a loggin tool like sentry
+[X] add more logs and meaningful ones
+
+[ ] add pm2 to project
+
+[ ] use a di lib
+
+[ ] create a DAO class for the cache entries to abstract the usage of generics on repository
+
+[ ] add a monitoring tool
+
+[ ] design a possible architecture for the project thinking about reliability, scalability and maintainability (system design)
+
+[ ] use a loggin tool like sentry
+
+[ ] tests - unit and integration
