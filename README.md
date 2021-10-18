@@ -45,3 +45,11 @@ will be reset on every read/cache hit
 [ ] use a loggin tool like sentry
 
 [ ] tests - unit and integration
+
+[] setup for chai on test folder - so I can test rejected promises
+
+[] test rejected promises
+
+[] add retry operation for delete all cache entries when deletion failed
+
+[] add  try/catch statement on repository
