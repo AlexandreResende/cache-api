@@ -3,10 +3,10 @@ import sinon from "sinon";
 import chai from "chai";
 import faker from "faker";
 
-import { deleteCacheEntryFactory } from "../../factories/cache/DeleteCacheEntryCommandFactories";
 import { CACHE } from "../../../../src/Events";
 import { CacheData } from "../../../../src/repositories/ICacheRepository";
 import DeleteCacheEntryCommand from "../../../../src/commands/DeleteCacheEntryCommand";
+import { deleteCacheEntryFactory } from "../../factories/cache/DeleteCacheEntryCommandFactories";
 
 const expect = chai.expect;
 
@@ -39,19 +39,19 @@ describe("DeleteCacheEntryCommand", function() {
   });
 
   describe("unit tests", function() {
-    it("emits a allCacheEntriesDeleted when all cache entries were deleted successfully", async function() {
+    it("emits a cacheEntryDeleted when cache entry was deleted", async function() {
       // given
       const key = faker.lorem.word();
       const events = new EventEmitter();
       const deleteKey = sinon.stub().resolves();
 
-      const deleteAllEntries = (event: { key: string, data: CacheData }) => {
+      const cacheEntryDeleted = (event: { key: string, data: CacheData }) => {
         // then
         expect(typeof event).to.be.equal("object");
         expect(deleteKey.calledOnceWith(key)).to.be.true;
       }
 
-      events.on(CACHE.ALL_CACHE_ENTRIES_DELETED, deleteAllEntries);
+      events.on(CACHE.CACHE_ENTRY_DELETED, cacheEntryDeleted);
 
       // when
       const command = deleteCacheEntryFactory(events, { deleteKey });
