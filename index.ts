@@ -2,8 +2,8 @@ require('module-alias/register');
 
 import App from "./src/app";
 
-const app = new App();
+const server = new App();
 
-app.listen();
+server.listen();
 
-export default app;
+export default server.app;
