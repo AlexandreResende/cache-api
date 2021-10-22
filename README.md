@@ -32,6 +32,8 @@ will be reset on every read/cache hit
 
 [X] add more logs and meaningful ones
 
+[] add eslint to project
+
 [ ] add pm2 to project
 
 [ ] use a di lib
