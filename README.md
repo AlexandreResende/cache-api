@@ -42,18 +42,24 @@ will be reset on every read/cache hit
 
 [ ] design a possible architecture for the project thinking about reliability, scalability and maintainability (system design)
 
-[ ] use a loggin tool like sentry
+[ ] use a logging tool like sentry
 
 [ ] tests - unit and integration
 
-[] setup for chai on test folder - so I can test rejected promises
+[] setup for chai on test folder
 
-[] test rejected promises
+[] test rejected promises - add chai as promise
 
 [] add retry operation for delete all cache entries when deletion failed
 
-[] add  try/catch statement on repository
+[] add  try/catch statement on repository - learn more about error handling
 
 [] add swagger
 
 [] add pipeline - github actions to project to run tests
+
+[] improve infra setup for hosting app on cloud provider - eg heroku
+
+[] improve documentation on how to use the API and its behaviors
+
+[] learn more about mongodb - advantages and disadvantages
