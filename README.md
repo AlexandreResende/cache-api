@@ -46,7 +46,7 @@ will be reset on every read/cache hit
 
 [ ] tests - unit and integration
 
-[] setup for chai on test folder
+[X] setup for chai on test folder
 
 [] test rejected promises - add chai as promise
 
