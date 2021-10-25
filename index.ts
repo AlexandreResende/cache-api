@@ -1,9 +1,21 @@
 require('module-alias/register');
+import 'reflect-metadata';
 
-import App from "./src/app";
+import { Application } from 'express';
+import { Db } from 'mongodb';
 
-const server = new App();
+import App from './src/app';
 
-server.listen();
+// const server = new App();
 
-export default server.app;
+// server.listen();
+
+export default function(database: Db): Application {
+  const server = new App();
+
+  server.listen();
+
+  return server.app;
+}
+
+// export default server.app;

@@ -31,6 +31,7 @@
     "module-alias": "^2.2.2",
     "mongodb": "^4.1.2",
     "nodemon": "^2.0.13",
+    "reflect-metadata": "^0.1.13",
     "ts-node": "^10.2.1",
     "ts-watch": "^1.0.8",
     "tsyringe": "^4.6.0",

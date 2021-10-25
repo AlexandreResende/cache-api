@@ -1,4 +1,4 @@
-import faker from "faker";
+import faker from 'faker';
 
 process.env.RECORD_TIME_TO_LIVE=faker.datatype.number({ min: 1, max: 100 }).toString();
 process.env.MAXIMUM_CACHE_ENTRIES=faker.datatype.number({ min: 1, max: 100 }).toString();
