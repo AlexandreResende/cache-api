@@ -1,45 +1,39 @@
-import EventEmitter from "events";
-import sinon from "sinon";
-import chai from "chai";
-import faker from "faker";
+import EventEmitter from 'events';
+import sinon from 'sinon';
+import chai from 'chai';
+import faker from 'faker';
 
-import { deleteAllCacheEntriesFactory } from "../../factories/cache/DeleteAllCacheEntriesCommandFactory";
-import { CACHE } from "../../../../src/Events";
-import { CacheData } from "../../../../src/repositories/ICacheRepository";
-import DeleteAllCacheEntriesCommand from "../../../../src/commands/DeleteAllCacheEntriesCommand";
+import { deleteAllCacheEntriesFactory } from '../../factories/cache/DeleteAllCacheEntriesCommandFactory';
+import { CACHE } from '../../../../src/Events';
+import { CacheData } from '../../../../src/repositories/ICacheRepository';
+import DeleteAllCacheEntriesCommand from '../../../../src/commands/DeleteAllCacheEntriesCommand';
 
 const expect = chai.expect;
 
-describe("DeleteAllCacheEntriesCommand", function() {
-  describe("sanity tests", function() {
-    it("exists", function() {
-      const events = new EventEmitter();
-
-      const command = deleteAllCacheEntriesFactory(events, {});
+describe('DeleteAllCacheEntriesCommand', function() {
+  describe('sanity tests', function() {
+    it('exists', function() {
+      const command = deleteAllCacheEntriesFactory();
 
       expect(command).to.not.be.null;
       expect(command).to.not.be.undefined;
     });
 
-    it("is an instance of DeleteAllCacheEntriesCommand", function() {
-      const events = new EventEmitter();
-
-      const command = deleteAllCacheEntriesFactory(events, {});
+    it('is an instance of DeleteAllCacheEntriesCommand', function() {
+      const command = deleteAllCacheEntriesFactory();
 
       expect(command).to.be.instanceof(DeleteAllCacheEntriesCommand);
     });
 
-    it("implements IBaseCommand correctly", function() {
-      const events = new EventEmitter();
-
-      const command = deleteAllCacheEntriesFactory(events, {});
+    it('implements IBaseCommand correctly', function() {
+      const command = deleteAllCacheEntriesFactory();
 
       expect(typeof command.execute).to.be.equal('function');
-    })
+    });
   });
 
-  describe("unit tests", function() {
-    it("emits a allCacheEntriesDeleted when all cache entries were deleted successfully", async function() {
+  describe('unit tests', function() {
+    it('emits a allCacheEntriesDeleted when all cache entries were deleted successfully', async function() {
       // given
       const key = faker.lorem.word();
       const data = faker.lorem.word();
@@ -48,15 +42,15 @@ describe("DeleteAllCacheEntriesCommand", function() {
 
       const deleteAllEntries = (event: { key: string, data: CacheData }) => {
         // then
-        expect(typeof event).to.be.equal("object");
+        expect(typeof event).to.be.equal('object');
         expect(deleteAll.calledOnce).to.be.true;
-      }
+      };
 
       events.on(CACHE.ALL_CACHE_ENTRIES_DELETED, deleteAllEntries);
 
       // when
-      const command = deleteAllCacheEntriesFactory(events, { deleteAll });
-      await command.execute();
+      const command = deleteAllCacheEntriesFactory({ deleteAll });
+      await command.execute(events);
     });
   });
 });

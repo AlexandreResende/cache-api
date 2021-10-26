@@ -1,45 +1,39 @@
-import EventEmitter from "events";
-import sinon from "sinon";
-import chai from "chai";
-import faker from "faker";
+import EventEmitter from 'events';
+import sinon from 'sinon';
+import chai from 'chai';
+import faker from 'faker';
 
-import { CACHE } from "../../../../src/Events";
-import { CacheData } from "../../../../src/repositories/ICacheRepository";
-import { UpdateOldestEntryCommand } from "../../../../src/commands/UpdateOldestEntryCommand";
-import { updateOldestEntryFactory } from "../../factories/cache/UpdateOldestEntryCommandFactory";
+import { CACHE } from '../../../../src/Events';
+import { CacheData } from '../../../../src/repositories/ICacheRepository';
+import { UpdateOldestEntryCommand } from '../../../../src/commands/UpdateOldestEntryCommand';
+import { updateOldestEntryFactory } from '../../factories/cache/UpdateOldestEntryCommandFactory';
 
 const expect = chai.expect;
 
-describe("UpdateOldestEntryCommand", function() {
-  describe("sanity tests", function() {
-    it("exists", function() {
-      const events = new EventEmitter();
-
-      const command = updateOldestEntryFactory(events, {});
+describe('UpdateOldestEntryCommand', function() {
+  describe('sanity tests', function() {
+    it('exists', function() {
+      const command = updateOldestEntryFactory({});
 
       expect(command).to.not.be.null;
       expect(command).to.not.be.undefined;
     });
 
-    it("is an instance of UpdateOldestEntryCommand", function() {
-      const events = new EventEmitter();
-
-      const command = updateOldestEntryFactory(events, {});
+    it('is an instance of UpdateOldestEntryCommand', function() {
+      const command = updateOldestEntryFactory({});
 
       expect(command).to.be.instanceof(UpdateOldestEntryCommand);
     });
 
-    it("implements IBaseCommand correctly", function() {
-      const events = new EventEmitter();
-
-      const command = updateOldestEntryFactory(events, {});
+    it('implements IBaseCommand correctly', function() {
+      const command = updateOldestEntryFactory();
 
       expect(typeof command.execute).to.be.equal('function');
-    })
+    });
   });
 
-  describe("unit tests", function() {
-    it("emits an updatedOldestEntry when oldest data was updated", async function() {
+  describe('unit tests', function() {
+    it('emits an updatedOldestEntry when oldest data was updated', async function() {
       // given
       const key = faker.lorem.word();
       const data = faker.lorem.word();
@@ -50,16 +44,16 @@ describe("UpdateOldestEntryCommand", function() {
 
       const updateOldestEntry = (event: { key: string, data: CacheData }) => {
         // then
-        expect(typeof event).to.be.equal("object");
+        expect(typeof event).to.be.equal('object');
         expect(getOldestEntry.calledOnce).to.be.true;
         expect(updateWithId.calledOnceWith(id, { key, data })).to.be.true;
-      }
+      };
 
       events.on(CACHE.UPDATED_OLDEST_ENTRY, updateOldestEntry);
 
       // when
-      const command = updateOldestEntryFactory(events, { getOldestEntry, updateWithId });
-      await command.execute({ key, data });
+      const command = updateOldestEntryFactory({ getOldestEntry, updateWithId });
+      await command.execute(events, { key, data });
     });
   });
 });
