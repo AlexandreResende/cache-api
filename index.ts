@@ -1,21 +1,11 @@
-require('module-alias/register');
 import 'reflect-metadata';
+import './src/config/di';
 
-import { Application } from 'express';
-import { Db } from 'mongodb';
+import connectDb from './src/infra/mongoClient';
 
-import App from './src/app';
+connectDb().then(async () => {
+  const { App } = await import('./src/app');
+  const app = new App();
 
-// const server = new App();
-
-// server.listen();
-
-export default function(database: Db): Application {
-  const server = new App();
-
-  server.listen();
-
-  return server.app;
-}
-
-// export default server.app;
+  app.listen();
+});
