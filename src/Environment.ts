@@ -1,10 +1,8 @@
-import { POINT_CONVERSION_COMPRESSED } from "constants";
-
 export const API = {
   PORT: process.env.PORT || 3000,
   RECORD_TIME_TO_LIVE: process.env.RECORD_TIME_TO_LEAVE || 10,
   MAXIMUM_CACHE_ENTRIES: process.env.MAXIMUM_ENTRIES || 10,
-}
+};
 
 export const DATABASE = {
   DATABASE_NAME: process.env.MONGO_INITDB_DATABASE,
