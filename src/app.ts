@@ -1,10 +1,9 @@
-require('module-alias/register');
 import express from 'express';
 
 import { API } from './Environment';
-import { Routes } from './routes/Routes';
+import routes from './routes/Routes';
 
-export default class App {
+export class App {
   public readonly app: express.Application;
 
   constructor() {
@@ -25,8 +24,6 @@ export default class App {
   }
 
   private initializeControllers(): void {
-    const routes = new Routes().getRoutes();
-
     this.app.use(routes);
   }
 }
