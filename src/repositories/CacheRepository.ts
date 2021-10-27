@@ -1,13 +1,20 @@
-import { Collection, Document, ObjectId } from "mongodb";
+import { Collection, Db, ObjectId } from 'mongodb';
 
-import { CacheData, ICacheRepository } from "./ICacheRepository";
+import { CacheData, ICacheRepository } from './ICacheRepository';
 import { API } from '../Environment';
-import { CacheEntryEntity } from "../entities/CacheEntry";
+import { CacheEntryEntity } from '../entities/CacheEntry';
+import { inject, Lifecycle, registry, scoped } from 'tsyringe';
 
+@scoped(Lifecycle.ResolutionScoped)
+@registry([{ token: 'CacheRepository', useClass: CacheRepository }])
 export default class CacheRepository implements ICacheRepository {
-  constructor(
-    private readonly collection: Collection = collection,
-  ) { }
+  private readonly collectionName = 'dummy';
+  private readonly collection: Collection;
+
+  constructor(@inject('Database') private readonly db: Db) {
+    this.collection = this.db.collection(this.collectionName);
+  }
+
 
   async get(key: string): Promise<CacheEntryEntity | null> {
     const record = await this.collection.findOne<CacheEntryEntity>({ key: { $eq: key } });
@@ -35,10 +42,12 @@ export default class CacheRepository implements ICacheRepository {
   }
 
   async updateWithId(id: string, updatedData: { key: string, data: string}): Promise<void> {
-    await this.collection.updateOne({
-      _id: new ObjectId(id.toString()) },
-      { $set: { ...updatedData, timestamp: Date.now() },
-    });
+    await this.collection.updateOne(
+      { _id: new ObjectId(id.toString()) },
+      {
+        $set: { ...updatedData, timestamp: Date.now() },
+      }
+    );
   }
 
   async update(key: string, data: string): Promise<void> {
@@ -52,7 +61,7 @@ export default class CacheRepository implements ICacheRepository {
   }
 
   async getOldestEntry(): Promise<CacheEntryEntity> {
-    const cursor = await this.collection.find<CacheEntryEntity>({}).sort({ "timestamp": 1 }).limit(1);
+    const cursor = await this.collection.find<CacheEntryEntity>({}).sort({ 'timestamp': 1 }).limit(1);
     const entry = await cursor.toArray();
 
     return entry[0];

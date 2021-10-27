@@ -1,4 +1,4 @@
-import { Document } from "mongodb";
+import { Document } from 'mongodb';
 
 export type CacheData = string;
 
