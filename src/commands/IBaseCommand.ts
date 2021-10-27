@@ -1,3 +1,5 @@
+import EventEmitter from 'events';
+
 export interface IBaseCommand {
-  execute(payload?: object): Promise<void | boolean>;
+  execute(events: EventEmitter, payload?: object): Promise<void | boolean>;
 }
