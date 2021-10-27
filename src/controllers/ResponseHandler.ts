@@ -1,6 +1,6 @@
-import { Response } from "express";
-import { STATUS_CODES } from "http";
-import { StatusCodes } from "./HttpStatusCode";
+import { Response } from 'express';
+import { STATUS_CODES } from 'http';
+import { StatusCodes } from './HttpStatusCode';
 
 export class HttpResponseHandler {
   private readonly response: Response;
@@ -39,7 +39,7 @@ export class HttpResponseHandler {
 
   public static sendInternalError(response: Response, error: Error): void {
     response.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-      message: "An internal error occurred",
+      message: 'An internal error occurred',
       error: error.message
     });
   }

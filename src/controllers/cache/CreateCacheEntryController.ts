@@ -1,12 +1,22 @@
-import { EventEmitter } from "events";
-import { Request, Response } from "express";
+import { EventEmitter } from 'events';
+import { Request, Response } from 'express';
+import Joi from 'joi';
+import { inject, Lifecycle, registry, scoped } from 'tsyringe';
 
-import { CACHE } from "../../Events";
-import Container from "../../di";
-import { HttpResponseHandler } from "../ResponseHandler";
-import Joi from "joi";
+import { CACHE } from '../../Events';
+import { HttpResponseHandler } from '../ResponseHandler';
+import CreateCacheEntryCommand from '../../commands/CreateCacheEntryCommand';
+import Controller from '../Controller';
 
-export class CreateCacheEntryController {
+@scoped(Lifecycle.ResolutionScoped)
+@registry([{ token: 'Controller', useClass: CreateCacheEntryController }])
+export class CreateCacheEntryController extends Controller {
+  constructor(
+    @inject('CreateCacheEntryCommand') public readonly command: CreateCacheEntryCommand,
+  ) {
+    super('post', '/cache');
+  }
+
   async handleRequest(req: Request, res: Response): Promise<void> {
     const schema = Joi.object({
       key: Joi.string().required(),
@@ -35,8 +45,6 @@ export class CreateCacheEntryController {
     events.on(CACHE.CACHE_KEY_ALREADY_EXISTS, cacheKeyAlreadyExists);
     events.on(CACHE.UPDATED_OLDEST_ENTRY, cacheOperationSuccess);
 
-    const command = await Container.resolve("createCacheEntryCommand", events);
-
-    await command.execute(req.body);
+    await this.command.execute(events, req.body);
   }
 }

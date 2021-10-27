@@ -1,11 +1,21 @@
-import { EventEmitter } from "events";
-import { Request, Response } from "express";
+import { EventEmitter } from 'events';
+import { Request, Response } from 'express';
+import { inject, Lifecycle, registry, scoped } from 'tsyringe';
+import UpdateCacheEntryCommand from '../../commands/UpdateCacheEntryCommand';
 
-import { CACHE } from "../../Events";
-import Container from "../../di";
-import { HttpResponseHandler } from "../ResponseHandler";
+import { CACHE } from '../../Events';
+import Controller from '../Controller';
+import { HttpResponseHandler } from '../ResponseHandler';
 
-export class UpdateCacheEntryController {
+@scoped(Lifecycle.ResolutionScoped)
+@registry([{ token: 'Controller', useClass: UpdateCacheEntryController }])
+export class UpdateCacheEntryController extends Controller {
+  constructor(
+    @inject('UpdateCacheEntryCommand') private readonly command: UpdateCacheEntryCommand,
+  ) {
+    super('put', '/cache');
+  }
+
   async handleRequest(req: Request, res: Response): Promise<void> {
     const updateCacheEntryCreated = (data: object) => {
       return HttpResponseHandler.sendSuccess(res, data);
@@ -14,8 +24,6 @@ export class UpdateCacheEntryController {
     const events = new EventEmitter();
     events.on(CACHE.CACHE_ENTRY_UPDATED, updateCacheEntryCreated);
 
-    const command = await Container.resolve("updateCacheEntryCommand", events);
-
-    await command.execute(req.body);
+    await this.command.execute(events, req.body);
   }
 }
