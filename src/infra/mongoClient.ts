@@ -12,9 +12,10 @@ const mongoConnect = async (): Promise<MongoClient> => {
 
 export default (): Promise<void> =>
   mongoConnect()
-    .then((client) => {
-      console.log('Connected successfully to server');
+    .then(async (client) => {
+      console.log(`Connected successfully to database server ${DATABASE.DATABASE_NAME}`);
 
+      await client.connect();
       const database = client.db(DATABASE.DATABASE_NAME);
 
       container.registerInstance('Database', database);
