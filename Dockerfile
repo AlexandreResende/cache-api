@@ -8,4 +8,6 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm", "start"]
+ENV NODE_PATH=./build
+
+CMD ["npm", "run", "build"]

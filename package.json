@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && nodemon index.ts",
+    "start": "NODE_PATH=./build node build/index.js",
     "build": "tsc -p .",
-    "dev": "tsc -p . && nodemon ./index.ts",
+    "dev": "nodemon ./index.ts",
     "test": "mocha -r ts-node/register ./test/**/**.ts --exit"
   },
   "repository": {

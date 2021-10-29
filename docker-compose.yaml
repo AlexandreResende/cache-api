@@ -8,13 +8,15 @@ services:
     env_file:
       - .env
     volumes:
-      - './:/poupa-up'
+      - './:/app'
+      - ./nodemon.json:/home/node/app/nodemon.json
     ports:
       - '3000:3000'
     depends_on:
       - database
     networks:
       - cache-api-network
+    command: npm run dev
 
   database:
     image: mongo
