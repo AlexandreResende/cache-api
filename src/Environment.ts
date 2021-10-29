@@ -1,3 +1,7 @@
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 export const API = {
   PORT: process.env.PORT || 3000,
   RECORD_TIME_TO_LIVE: process.env.RECORD_TIME_TO_LEAVE || 10,
