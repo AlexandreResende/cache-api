@@ -5,11 +5,11 @@ import { logger } from '../Logger';
 import { CACHE } from '../Events';
 import { IBaseCommand } from './IBaseCommand';
 import { ICache } from '../repositories/ICacheRepository';
-import { inject, injectable, Lifecycle, registry, scoped } from 'tsyringe';
+import { inject, Lifecycle, registry, scoped } from 'tsyringe';
 
 type getCacheData = { key: string };
 
-@injectable()
+
 @scoped(Lifecycle.ResolutionScoped)
 @registry([{ token: 'GetCacheDataCommand', useClass: GetCacheDataCommand }])
 export default class GetCacheDataCommand implements IBaseCommand {

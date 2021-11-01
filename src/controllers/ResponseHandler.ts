@@ -1,5 +1,4 @@
 import { Response } from 'express';
-import { STATUS_CODES } from 'http';
 import { StatusCodes } from './HttpStatusCode';
 
 export class HttpResponseHandler {
@@ -9,15 +8,15 @@ export class HttpResponseHandler {
     this.response = response;
   }
 
-  public static sendSuccess(response: Response, data?: {}): void {
+  public static sendSuccess(response: Response, data?: object): void {
     response.status(StatusCodes.OK).send(data);
   }
 
-  public static sendCreated(response: Response, data?: {}): void {
+  public static sendCreated(response: Response, data?: object): void {
     response.status(StatusCodes.CREATED).send(data);
   }
 
-  public static sendNoContent(response: Response, data?: {}): void {
+  public static sendNoContent(response: Response, data?: object): void {
     response.status(StatusCodes.NO_CONTENT).send(data);
   }
 

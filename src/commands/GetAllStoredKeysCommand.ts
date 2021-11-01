@@ -6,8 +6,6 @@ import { IBaseCommand } from './IBaseCommand';
 import { IFindAllKeysCacheRepository } from '../repositories/ICacheRepository';
 import { inject, Lifecycle, registry, scoped } from 'tsyringe';
 
-type getCacheData = { key: string };
-
 @scoped(Lifecycle.ResolutionScoped)
 @registry([{ token: 'GetAllStoredKeysCommand', useClass: GetAllStoredKeysCommand }])
 export default class GetAllStoredKeysCommand implements IBaseCommand {
