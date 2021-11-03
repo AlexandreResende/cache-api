@@ -6,10 +6,10 @@ import { IUpdateCacheEntryRepository } from '../../../../src/repositories/ICache
 export function updateCacheEntryFactory(
   cache: Partial<IUpdateCacheEntryRepository> = {},
 ) {
-  const update = sinon.stub();
+  const updateByKey = sinon.stub();
   const updateWithId = sinon.stub();
 
   return new UpdateCacheEntryCommand(
-    { update, updateWithId, ...cache },
+    { updateByKey, updateWithId, ...cache },
   );
 }

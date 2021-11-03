@@ -1,13 +1,56 @@
-import { Collection, Db } from 'mongodb';
-import { inject } from 'tsyringe';
+import { Collection } from 'mongodb';
 
-export default abstract class Database<T = unknown, K = unknown> {
-  // private readonly collection: Collection;
+export type UpdateFieldType = string | number;
+
+export default class Database<T = unknown> {
+  public readonly collection: Collection;
 
   constructor(
-    @inject('Database') private readonly db: Db
-  ) {}
+    collection: Collection,
+  ) {
+    this.collection = collection;
+  }
 
-  public abstract get(key: string): Promise<T>;
-  public abstract set(key: string, data: K): Promise<void>;
+  async findRecord(fieldName: string, key: string): Promise<T | null> {
+    const condition = { [fieldName]: { $eq: key } };
+    const record = await this.collection.findOne<T>(condition);
+
+    return record;
+  }
+
+  async create(key: string, data: string): Promise<void> {
+    await this.collection.insertOne({ key, data, timestamp: Date.now() });
+  }
+
+  async remove(fieldName: string, fieldValue: string): Promise<void> {
+    const condition = { [fieldName]: fieldValue };
+
+    this.collection.deleteOne(condition);
+  }
+
+  async removeAll(): Promise<void> {
+    await this.collection.deleteMany({});
+  }
+
+  async updateRecord(fieldName: string, fieldValue: UpdateFieldType, updatedValues: object) {
+    const condition = { [fieldName]: fieldValue };
+
+    await this.collection.updateOne(
+      condition,
+      { $set: { ...updatedValues, timestamp: Date.now() } },
+    );
+  }
+
+  async countEntries(): Promise<number> {
+    const amountOfEntries = await this.collection.find({}).count();
+
+    return amountOfEntries;
+  }
+
+  async getOldestEntry(): Promise<T> {
+    const cursor = await this.collection.find<T>({}).sort({ 'timestamp': 1 }).limit(1);
+    const entry = await cursor.toArray();
+
+    return entry[0];
+  }
 }

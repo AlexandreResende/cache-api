@@ -49,7 +49,7 @@ describe('UpdateCacheEntryCommand', function() {
       events.on(CACHE.CACHE_ENTRY_UPDATED, cacheEntryDeleted);
 
       // when
-      const command = updateCacheEntryFactory({ update });
+      const command = updateCacheEntryFactory({ updateByKey: update });
       await command.execute(events, { key, data });
     });
   });

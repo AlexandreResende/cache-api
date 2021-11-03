@@ -14,7 +14,7 @@ export interface ICacheRepository extends
   IGetOldestEntryRepository {}
 
 export interface ICache {
-  get(key: string): Promise<Document | null>;
+  get(key: string): Promise<Document | void>;
   set(key: string, data: CacheData): Promise<void>
 }
 
@@ -32,7 +32,7 @@ export interface IDeleteAllCacheRepository {
 
 export interface IUpdateCacheEntryRepository {
   updateWithId(id: string, updatedData: { key: string, data: string}): Promise<void>
-  update(key: string, data: string): Promise<void>;
+  updateByKey(key: string, data: string): Promise<void>;
 }
 
 export interface ICheckCacheLoadRepository {

@@ -1,29 +1,40 @@
-import { Collection, Db, ObjectId } from 'mongodb';
+import { Collection, ObjectId } from 'mongodb';
 
 import { CacheData, ICacheRepository } from './ICacheRepository';
 import { API } from '../Environment';
 import { CacheEntryEntity } from '../entities/CacheEntry';
-import { inject, Lifecycle, registry, scoped } from 'tsyringe';
+import { injectWithTransform, Lifecycle, registry, scoped } from 'tsyringe';
+import Database from './Database';
+import DatabaseTransform from './DatabaseTransformer';
 
 @scoped(Lifecycle.ResolutionScoped)
 @registry([{ token: 'CacheRepository', useClass: CacheRepository }])
-export default class CacheRepository implements ICacheRepository {
-  private readonly collectionName = 'dummy';
-  private readonly collection: Collection;
+export default class CacheRepository extends Database<CacheEntryEntity> implements ICacheRepository {
+  private static readonly collectionName = 'dummy';
 
-  constructor(@inject('Database') private readonly db: Db) {
-    this.collection = this.db.collection(this.collectionName);
+  constructor(
+    @injectWithTransform(
+      'Database',
+      DatabaseTransform,
+      CacheRepository.collectionName,
+    ) private readonly _collection: Collection) {
+    super(_collection);
   }
 
 
-  async get(key: string): Promise<CacheEntryEntity | null> {
-    const record = await this.collection.findOne<CacheEntryEntity>({ key: { $eq: key } });
+  async get(key: string): Promise<CacheEntryEntity | void> {
+    const fieldName = 'key';
+    const record = await this.findRecord(fieldName, key);
+
+    if (!record) {
+      return;
+    }
 
     return record;
   }
 
   async set(key: string, data: CacheData): Promise<void> {
-    await this.collection.insertOne({ key, data, timestamp: Date.now() });
+    await this.create(key, data);
   }
 
   async getAllKeys(): Promise<string[]> {
@@ -34,11 +45,13 @@ export default class CacheRepository implements ICacheRepository {
   }
 
   async deleteKey(key: string): Promise<void> {
-    await this.collection.deleteOne({ key });
+    const fieldName = 'key';
+
+    await this.remove(fieldName, key);
   }
 
   async deleteAll(): Promise<void> {
-    await this.collection.deleteMany({});
+    await this.removeAll();
   }
 
   async updateWithId(id: string, updatedData: { key: string, data: string}): Promise<void> {
@@ -50,20 +63,27 @@ export default class CacheRepository implements ICacheRepository {
     );
   }
 
-  async update(key: string, data: string): Promise<void> {
-    await this.collection.updateOne({ key }, { $set: { data, timestamp: Date.now() } });
+  async updateByKey(key: string, data: string): Promise<void> {
+    const fieldName = 'key';
+
+    await this.updateRecord(fieldName, key, { data });
+  }
+
+  async updateById(id: string, updatedData: { key: string, data: string}): Promise<void> {
+    const fieldName = '_id';
+
+    this.updateRecord(fieldName, id, updatedData);
   }
 
   async isCacheFull(): Promise<boolean> {
-    const amountOfEntries = await this.collection.find({}).count();
+    const amountOfEntries = await this.countEntries();
 
     return amountOfEntries >= API.MAXIMUM_CACHE_ENTRIES;
   }
 
   async getOldestEntry(): Promise<CacheEntryEntity> {
-    const cursor = await this.collection.find<CacheEntryEntity>({}).sort({ 'timestamp': 1 }).limit(1);
-    const entry = await cursor.toArray();
+    const oldestEntry = await this.getOldestEntry();
 
-    return entry[0];
+    return oldestEntry;
   }
 }

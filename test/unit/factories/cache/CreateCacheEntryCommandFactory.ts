@@ -11,14 +11,14 @@ export function createCacheEntryFactory(
   const set = sinon.stub();
   const isCacheFull = sinon.stub();
   const getOldestEntry = sinon.stub();
-  const update = sinon.stub();
+  const updateByKey = sinon.stub();
   const updateWithId = sinon.stub();
   const updateOldestEntryCommand = updateOldestEntryFactory(
-    { getOldestEntry, update, updateWithId, ...cache }
+    { getOldestEntry, updateByKey, updateWithId, ...cache }
   );
 
   return new CreateCacheEntryCommand(
-    { set, get, isCacheFull, getOldestEntry, updateWithId, update, ...cache },
+    { set, get, isCacheFull, getOldestEntry, updateWithId, updateByKey, ...cache },
     updateOldestEntryCommand,
   );
 }

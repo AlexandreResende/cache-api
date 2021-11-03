@@ -10,8 +10,8 @@ export function updateOldestEntryFactory(
   cache: Partial<IGetOldestEntryRepository & IUpdateCacheEntryRepository> = {},
 ) {
   const getOldestEntry = sinon.stub();
-  const update = sinon.stub();
+  const updateByKey = sinon.stub();
   const updateWithId = sinon.stub();
 
-  return new UpdateOldestEntryCommand({ getOldestEntry, updateWithId, update, ...cache });
+  return new UpdateOldestEntryCommand({ getOldestEntry, updateWithId, updateByKey, ...cache });
 }

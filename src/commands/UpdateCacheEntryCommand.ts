@@ -14,7 +14,7 @@ export default class UpdateCacheEntryCommand implements IBaseCommand {
   ) {}
 
   async execute(events: EventEmitter, payload: { key: string, data: string }): Promise<void | boolean> {
-    await this.cache.update(payload.key, payload.data);
+    await this.cache.updateByKey(payload.key, payload.data);
 
     logger.info(`Update cache entry which key is ${payload.key}`);
 
