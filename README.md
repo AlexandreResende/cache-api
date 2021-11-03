@@ -36,7 +36,7 @@ will be reset on every read/cache hit
 
 [X] use a di lib
 
-[ ] create a DAO class for the cache entries to abstract the usage of generics on repository
+[X] create a class for centralizing mongodb method calls
 
 [ ] add a monitoring tool
 
