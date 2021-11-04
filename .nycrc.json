@@ -1,0 +1,8 @@
+{
+  "include": ["src/**"],
+  "check-coverage": true,
+  "lines": 30,
+  "statements": 30,
+  "branches": 30,
+  "functions": 30
+}
