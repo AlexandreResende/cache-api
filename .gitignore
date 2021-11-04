@@ -3,3 +3,4 @@ node_modules/
 /mongo-volume/
 error.log
 combined.log
+/.nyc_output

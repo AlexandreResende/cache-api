@@ -7,7 +7,8 @@
     "start": "NODE_PATH=./build node build/index.js",
     "build": "tsc -p .",
     "dev": "nodemon ./index.ts",
-    "test": "mocha -r ts-node/register ./test/**/**.ts --exit"
+    "test": "mocha -r ts-node/register ./test/**/**.ts --exit",
+    "coverage": "nyc npm run test"
   },
   "repository": {
     "type": "git",

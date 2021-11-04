@@ -65,3 +65,5 @@ will be reset on every read/cache hit
 [] learn more about mongodb - advantages and disadvantages
 
 [] ignore objectId from mongoDB and work with my own id -- add uuid lib
+
+[X] Add coverage library
