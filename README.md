@@ -38,12 +38,6 @@ will be reset on every read/cache hit
 
 [X] create a class for centralizing mongodb method calls
 
-[ ] add a monitoring tool
-
-[ ] design a possible architecture for the project thinking about reliability, scalability and maintainability (system design)
-
-[ ] use a logging tool like sentry
-
 [ ] tests - unit and integration
 
 [X] setup for chai on test folder
@@ -64,6 +58,6 @@ will be reset on every read/cache hit
 
 [] learn more about mongodb - advantages and disadvantages
 
-[] ignore objectId from mongoDB and work with my own id -- add uuid lib
+[] ignore objectId from mongoDB and work with my own id -- add uuid lib - optional
 
 [X] Add coverage library
