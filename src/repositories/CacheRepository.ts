@@ -6,6 +6,7 @@ import { CacheEntryEntity } from '../entities/CacheEntry';
 import { injectWithTransform, Lifecycle, registry, scoped } from 'tsyringe';
 import Database from './Database';
 import DatabaseTransform from './DatabaseTransformer';
+import { logger } from '../Logger';
 
 @scoped(Lifecycle.ResolutionScoped)
 @registry([{ token: 'CacheRepository', useClass: CacheRepository }])
@@ -38,10 +39,16 @@ export default class CacheRepository extends Database<CacheEntryEntity> implemen
   }
 
   async getAllKeys(): Promise<string[]> {
-    const cursor = await this.collection.find<CacheEntryEntity>({}, { projection: { _id: false, data: false } });
-    const allValues = await cursor.toArray();
+    try {
+      const cursor = await this.collection.find<CacheEntryEntity>({}, { projection: { _id: false, data: false } });
+      const allValues = await cursor.toArray();
 
-    return allValues.map((data: CacheEntryEntity) => { return data.key; });
+      return allValues.map((data: CacheEntryEntity) => { return data.key; });
+    } catch (e: any) {
+      logger.error('Failed to get all cache keys');
+
+      throw new Error(e);
+    }
   }
 
   async deleteKey(key: string): Promise<void> {

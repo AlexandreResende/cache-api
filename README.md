@@ -46,7 +46,7 @@ will be reset on every read/cache hit
 
 [] add retry operation for delete all cache entries when deletion failed
 
-[] add  try/catch statement on repository - learn more about error handling
+[X] add  try/catch statement on repository - learn more about error handling
 
 [] add swagger
 
