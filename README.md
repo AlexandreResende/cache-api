@@ -61,3 +61,5 @@ will be reset on every read/cache hit
 [] ignore objectId from mongoDB and work with my own id -- add uuid lib - optional
 
 [X] Add coverage library
+
+[] Deploy application on heroku with mongodb atlas as DB
