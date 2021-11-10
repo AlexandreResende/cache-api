@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_PATH=./build node build/index.js",
+    "start": "nodemon",
+    "start:docker": "NODE_PATH=./build node build/index.js",
     "build": "tsc -p .",
     "dev": "nodemon ./index.ts",
     "test": "mocha -r ts-node/register ./test/**/**.ts --exit",
