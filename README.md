@@ -62,4 +62,6 @@ will be reset on every read/cache hit
 
 [X] Add coverage library
 
+[X] Create mongoDB atlas instance
+
 [] Deploy application on heroku with mongodb atlas as DB
