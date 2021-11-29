@@ -4,7 +4,9 @@ import { container } from 'tsyringe';
 import { DATABASE } from '../Environment';
 
 const mongoConnect = async (): Promise<MongoClient> => {
-  const url = `mongodb://${DATABASE.DATABASE_USER}:${DATABASE.DATABASE_PASSWORD}@database:27017`;
+  const url = DATABASE.DATABASE_URL
+    ? DATABASE.DATABASE_URL
+    : `mongodb://${DATABASE.DATABASE_USER}:${DATABASE.DATABASE_PASSWORD}@database:27017`;
   const client = new MongoClient(url);
 
   return client;
