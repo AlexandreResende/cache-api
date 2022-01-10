@@ -21,4 +21,7 @@ export default (): Promise<void> =>
       const database = client.db(DATABASE.DATABASE_NAME);
 
       container.registerInstance('Database', database);
+    })
+    .catch((error) => {
+      console.error('Error connecting to database server', error);
     });
