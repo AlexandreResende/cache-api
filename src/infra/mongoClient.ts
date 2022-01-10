@@ -17,8 +17,13 @@ export default (): Promise<void> =>
     .then(async (client) => {
       console.log(`Connected successfully to database server ${DATABASE.DATABASE_NAME}`);
 
-      await client.connect();
-      const database = client.db(DATABASE.DATABASE_NAME);
+      let database;
+      try {
+        await client.connect();
+        database = client.db(DATABASE.DATABASE_NAME);
+      } catch (err) {
+        console.error('Error after connecting to database', err);
+      }
 
       container.registerInstance('Database', database);
     })
