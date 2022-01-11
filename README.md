@@ -38,7 +38,7 @@ will be reset on every read/cache hit
 
 [X] create a class for centralizing mongodb method calls
 
-[ ] tests - unit and integration
+[] tests - unit and integration
 
 [X] setup for chai on test folder
 
@@ -64,4 +64,4 @@ will be reset on every read/cache hit
 
 [X] Create mongoDB atlas instance
 
-[] Deploy application on heroku with mongodb atlas as DB
+[X] Deploy application on heroku with mongodb atlas as DB
